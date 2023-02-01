@@ -1,9 +1,13 @@
 package com.mafv.springprojects.exament4.model;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Grupo {
@@ -13,6 +17,9 @@ public class Grupo {
 
     @Column(unique = true)
     private String nombre;
+
+    @OneToMany(mappedBy= "grupo")
+    private List<Usuario> usuario;
 
     public Grupo() {
     }
@@ -59,6 +66,14 @@ public class Grupo {
         } else if (!nombre.equals(other.nombre))
             return false;
         return true;
+    }
+
+    public List<Usuario> getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(List<Usuario> usuario) {
+        this.usuario = usuario;
     }
 
     

@@ -1,7 +1,9 @@
 package com.mafv.springprojects.exament4.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mafv.springprojects.exament4.model.Grupo;
 import com.mafv.springprojects.exament4.model.Usuario;
+import com.mafv.springprojects.exament4.services.GruposService;
 import com.mafv.springprojects.exament4.services.UsuariosService;
 
 @Controller
@@ -27,41 +32,17 @@ public class UsuarioController {
     @Autowired
     UsuariosService usuariosService;
 
-    @Value("${pagination.size}")
-    int sizePage;
+    @Autowired
+    GruposService gruposService;
+
 
     @GetMapping(value = "/list")
     public ModelAndView list(Model model) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:list/1/codigo/asc");
-        return modelAndView;
-    }
+        Iterable<Usuario> usuarios = usuariosService.findAll();
 
-    @GetMapping(value = "/list/{numPage}/{fieldSort}/{directionSort}")
-    public ModelAndView listPage(Model model,
-            @PathVariable("numPage") Integer numPage,
-            @PathVariable("fieldSort") String fieldSort,
-            @PathVariable("directionSort") String directionSort) {
-
-
-        Pageable pageable = PageRequest.of(numPage - 1, sizePage,
-            directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
-
-        Page<Usuario> page = usuariosService.findAll(pageable);
-
-        List<Usuario> usuarios = page.getContent();
-
-        ModelAndView modelAndView = new ModelAndView("usuarios/list");
         modelAndView.addObject("usuarios", usuarios);
-
-
-        modelAndView.addObject("numPage", numPage);
-        modelAndView.addObject("totalPages", page.getTotalPages());
-        modelAndView.addObject("totalElements", page.getTotalElements());
-
-        modelAndView.addObject("fieldSort", fieldSort);
-        modelAndView.addObject("directionSort", directionSort.equals("asc") ? "asc" : "desc");
-
+        modelAndView.setViewName("usuarios/list");
         return modelAndView;
     }
 
@@ -70,15 +51,24 @@ public class UsuarioController {
     public ModelAndView create(Usuario usuario) {
 
         ModelAndView modelAndView = new ModelAndView();
+
+        Iterable<Grupo> grupos = gruposService.findAll();
         modelAndView.addObject("usuario", new Usuario());
+        modelAndView.addObject("grupos", grupos);
         modelAndView.setViewName("usuarios/create");
 
         return modelAndView;
     }
 
     @PostMapping(path = "/save")
-    public ModelAndView save(Usuario usuario) throws IOException{
+    public ModelAndView save(Usuario usuario, @RequestParam("opcion") int optionValue) throws IOException{
 
+        Grupo grupo = gruposService.findByID(optionValue);
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        usuarios.add(usuario);
+        grupo.setUsuario(usuarios);
+        gruposService.update(grupo);
+        usuario.setGrupo(grupo);
         usuariosService.insert(usuario);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -92,9 +82,12 @@ public class UsuarioController {
             @PathVariable(name = "codigo", required = true) int codigo) {
 
         Usuario usuario = usuariosService.findByID(codigo);
+
+        Iterable<Grupo> grupos = gruposService.findAll();
                 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("usuario", usuario);
+        modelAndView.addObject("grupos", grupos);
         modelAndView.setViewName("usuarios/edit");
         return modelAndView;
     }

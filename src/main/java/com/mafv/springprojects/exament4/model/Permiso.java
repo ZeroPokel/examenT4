@@ -1,9 +1,13 @@
 package com.mafv.springprojects.exament4.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Permiso {
@@ -15,7 +19,15 @@ public class Permiso {
     @Column(unique = true)
     private String descripcion;
 
+    @Transient
+    @ManyToMany(mappedBy = "permisos")
+    private List<Usuario> usuarios;
+
     public Permiso() {
+    }
+    
+    public Permiso(int codigo) {
+        this.codigo = codigo;
     }
 
     public int getCodigo() {
@@ -62,5 +74,12 @@ public class Permiso {
         return true;
     }
 
-    
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
 }

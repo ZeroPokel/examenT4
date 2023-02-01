@@ -19,8 +19,8 @@ public class GruposServiceImpl implements GruposService{
     GrupoRepository repository;
 
     @Override
-    public Page<Grupo> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Iterable<Grupo> findAll() {
+        return repository.findAll();
     }
 
     @Override

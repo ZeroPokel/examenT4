@@ -1,9 +1,16 @@
 package com.mafv.springprojects.exament4.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Usuario {
@@ -17,8 +24,29 @@ public class Usuario {
 
     @Column(unique = true)
     private String email;
+/* 
+    @Transient
+    @ManyToMany
+	@JoinTable(
+		name="usuario_permiso"
+		, joinColumns={
+			@JoinColumn(name="usuario_codigo")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="permiso_codigo")
+			}
+		)
+    private List<Permiso> permisos;
+*/
+    @ManyToOne
+    @JoinColumn(name = "grupo", nullable = false)
+    private Grupo grupo;
 
     public Usuario() {
+    }
+
+    public Usuario(int codigo) {
+        this.codigo = codigo;
     }
 
     public int getCodigo() {
@@ -78,6 +106,21 @@ public class Usuario {
             return false;
         return true;
     }
+/* 
+    public List<Permiso> getPermisos() {
+        return permisos;
+    }
 
-    
+    public void setPermisos(List<Permiso> permisos) {
+        this.permisos = permisos;
+    }
+*/
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+  
 }

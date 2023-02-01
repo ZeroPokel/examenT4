@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface GruposService {
 
-    public Page<Grupo> findAll(Pageable page);
+    public Iterable<Grupo> findAll();
     public Grupo findByID(int codigo);
     public void insert(Grupo grupo);
     public void update(Grupo grupo);
