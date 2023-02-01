@@ -14,20 +14,18 @@
                 <thead>
                   <tr>
                     <th scope="col" th:text="#{permiso.codigo}">Código</th>
-                    <th scope="col" th:text="#{permiso.nombre}">Nombre</th>
+                    <th scope="col" th:text="#{permiso.descripcion}">Descripción</th>
                     <th scope="col" th:text="#{list.editar}">Editar</th>
                     <th scope="col" th:text="#{list.eliminar}">Eliminar</th>
-                    <th scope="col" th:text="#{list.cesta}">Comprar</th>
                   </tr>
                 </thead>
                 <tbody>
                     <div th:each="permiso : ${permisos}" class="col-3">
                         <tr>
                             <th scope="row" th:text="${permiso.codigo}">1</th>
-                            <td th:text="${permiso.nombre}">Ejemplo</td>
+                            <td th:text="${permiso.descripcion}">Ejemplo</td>
                             <td><a th:href="@{/permisos/edit/}+${permiso.codigo}" th:text="#{list.editar}" href="edit.html" class="btn btn-primary bi bi-pen"></a></td>
                             <td><a th:href="@{/permisos/delete/}+${permiso.codigo}" th:text="#{list.borrar}" href="list.html" class="btn btn-primary bi bi-trash"></a></td>
-                            <td> <a th:href="@{/permisos/pedido/}+${permiso.codigo}" th:text="#{list.cesta}" href="list.html" class="btn btn-primary bi bi-cart"></a></td>
                         </tr>
                     </div>
                 </tbody>

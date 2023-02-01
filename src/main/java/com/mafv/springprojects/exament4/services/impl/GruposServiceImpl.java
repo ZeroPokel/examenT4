@@ -1,9 +1,12 @@
 package com.mafv.springprojects.exament4.services.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.mafv.springprojects.exament4.model.Grupo;
 import com.mafv.springprojects.exament4.repository.GrupoRepository;
@@ -14,6 +17,11 @@ public class GruposServiceImpl implements GruposService{
 
     @Autowired
     GrupoRepository repository;
+
+    @Override
+    public Page<Grupo> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
 
     @Override
     public Grupo findByID(int codigo) {

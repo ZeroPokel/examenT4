@@ -15,42 +15,10 @@
                 <a class="nav-link active" aria-current="page" th:href="@{/}" th:text="#{menu.home}" href="../index.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" th:href="@{/productos/list}" th:text="#{menu.productos}" href="../productos/list.html">Productos</a>
+                <a class="nav-link" th:href="@{/permisos/list}" th:text="#{menu.permisos}" href="../permisos/list.html">Productos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" th:href="@{/clientes/list}" th:text="#{menu.clientes}" href="../clientes/list.html">Clientes</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/empleados/list}" th:text="#{menu.empleados}" href="../empleados/list.html">Empleados</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/departamentos/list}" th:text="#{menu.departamentos}" href="../departamentos/list.html">Departamentos</a>
-              </li>
-              <!--
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/proveedores/list}" th:text="#{menu.proveedores}" href="../proveedores/list.html">Proveedor</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/vendedores/list}" th:text="#{menu.vendedores}" href="../vendedores/list.html">Vendedor</a>
-              </li>
-              -->
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/clientes/pedido/}+${session.pedido.cliente.codigo}" th:text="#{menu.cesta}" th:if="${session ne null and session.pedido ne null}" href="../vendedores/list.html">Vendedor</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" th:href="@{/pedidos/list}" href="pedidos/list.html"  th:text="#{menu.pedidos}">Pedidos</a>
-            </li> 
-            </ul>
-
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                &#127760;
-                </a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" th:href="@{/welcome?lang_config=es}" href="#" th:text="#{menu.idioma.espanol}">Español</a>
-                  <a class="dropdown-item" th:href="@{/welcome?lang_config=en}" href="#" th:text="#{menu.idioma.ingles}">Inglés</a>
-                </div>
+                <a class="nav-link" th:href="@{/grupos/list}" th:text="#{menu.grupos}" href="../grupos/list.html">Productos</a>
               </li>
             </ul>
 
@@ -60,7 +28,6 @@
             </form>
           </div>
         </div>
-        <a class="btn btn-outline-success" th:href="@{/logout}"><i class="bi bi-box-arrow-in-left" th:text="${session.usuario.usuario}"></i></a>
     </nav>
   </div> 
 </body>

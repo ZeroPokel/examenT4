@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.mafv.springprojects.exament4.model.Grupo;
-import com.mafv.springprojects.exament4.services.GruposService;
+
+import com.mafv.springprojects.exament4.model.Usuario;
+import com.mafv.springprojects.exament4.services.UsuariosService;
 
 @Controller
-@RequestMapping("/grupos")
-public class GrupoController {
+@RequestMapping("/usuarios")
+public class UsuarioController {
 
     @Autowired
-    GruposService gruposService;
+    UsuariosService usuariosService;
 
     @Value("${pagination.size}")
     int sizePage;
-    
+
     @GetMapping(value = "/list")
     public ModelAndView list(Model model) {
         ModelAndView modelAndView = new ModelAndView();
@@ -43,15 +44,15 @@ public class GrupoController {
             @PathVariable("directionSort") String directionSort) {
 
 
-        Pageable pageable = PageRequest.of(numPage - 1, sizePage, 
-        directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
+        Pageable pageable = PageRequest.of(numPage - 1, sizePage,
+            directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
 
-        Page<Grupo> page = gruposService.findAll(pageable);
+        Page<Usuario> page = usuariosService.findAll(pageable);
 
-        List<Grupo> grupos = page.getContent();
+        List<Usuario> usuarios = page.getContent();
 
-        ModelAndView modelAndView = new ModelAndView("grupos/list");
-        modelAndView.addObject("grupos", grupos);
+        ModelAndView modelAndView = new ModelAndView("usuarios/list");
+        modelAndView.addObject("usuarios", usuarios);
 
 
         modelAndView.addObject("numPage", numPage);
@@ -64,23 +65,24 @@ public class GrupoController {
         return modelAndView;
     }
 
+
     @GetMapping(value = "/create")
-    public ModelAndView create(Grupo grupo) {
+    public ModelAndView create(Usuario usuario) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("grupo", new Grupo());
-        modelAndView.setViewName("grupos/create");
+        modelAndView.addObject("usuario", new Usuario());
+        modelAndView.setViewName("usuarios/create");
 
         return modelAndView;
     }
 
     @PostMapping(path = "/save")
-    public ModelAndView save(Grupo grupo) throws IOException{
+    public ModelAndView save(Usuario usuario) throws IOException{
 
-        gruposService.insert(grupo);
+        usuariosService.insert(usuario);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + grupo.getCodigo());
+        modelAndView.setViewName("redirect:edit/" + usuario.getCodigo());
 
         return modelAndView;
     }
@@ -89,21 +91,21 @@ public class GrupoController {
     public ModelAndView edit(
             @PathVariable(name = "codigo", required = true) int codigo) {
 
-        Grupo grupo = gruposService.findByID(codigo);
+        Usuario usuario = usuariosService.findByID(codigo);
                 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("grupo", grupo);
-        modelAndView.setViewName("grupos/edit");
+        modelAndView.addObject("usuario", usuario);
+        modelAndView.setViewName("usuarios/edit");
         return modelAndView;
     }
 
     @PostMapping(path = { "/update" })
-    public ModelAndView update(Grupo grupo) {
+    public ModelAndView update(Usuario usuario) {
 
-        gruposService.update(grupo);
+        usuariosService.update(usuario);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + grupo.getCodigo());
+        modelAndView.setViewName("redirect:edit/" + usuario.getCodigo());
         
         return modelAndView;
     }
@@ -112,11 +114,12 @@ public class GrupoController {
     public ModelAndView delete(
             @PathVariable(name = "codigo", required = true) int codigo) {
 
-        gruposService.delete(codigo);
+        usuariosService.delete(codigo);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/grupos/list");
+        modelAndView.setViewName("redirect:/usuarios/list");
 
         return modelAndView;
     }
+    
 }

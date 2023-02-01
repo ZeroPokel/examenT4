@@ -6,13 +6,13 @@
     <div th:replace="commons/menu :: menu"></div>
     <div class="container-fluid">
         <form class="row g-3" method="post" th:action="@{/permisos/update}">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="codigo" class="form-label" th:text="#{permiso.codigo}">Codigo</label>
                 <input type="text" class="form-control" id="codigo" name="codigo" th:value="${permiso.codigo}" readonly>
             </div>
-            <div class="col-md-4">
-                <label for="nombre" class="form-label" th:text="#{permiso.nombre}">Nombre</label>
-                <input type="nombre" class="form-control" id="nombre" name="nombre" th:value="${permiso.nombre}" >
+            <div class="col-md-6">
+                <label for="descripcion" class="form-label" th:text="#{permiso.descripcion}">Descripcion</label>
+                <input type="descripcion" class="form-control" id="descripcion" name="descripcion" th:value="${permiso.descripcion}" >
             </div>
             <div class="col-4">
                 <a th:href="@{/permisos/list}" href="list.html" class="btn btn-primary" th:text="#{list.atras}">Cancelar</a>
